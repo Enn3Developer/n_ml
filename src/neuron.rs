@@ -1,9 +1,10 @@
+use crate::ActivationData;
 use rand::distributions::{Distribution, Uniform};
 use rand::RngCore;
 
 pub struct Neuron {
     bias: f64,
-    previous_weights: Vec<f64>,
+    previous_weights: ActivationData,
 }
 
 impl Neuron {
@@ -29,7 +30,7 @@ impl Neuron {
         self.bias
     }
 
-    pub fn previous_weights(&self) -> &Vec<f64> {
+    pub fn previous_weights(&self) -> &ActivationData {
         &self.previous_weights
     }
 
@@ -55,7 +56,7 @@ impl Neuron {
 
     pub fn adjust_previous_weights(&mut self, offset: f64) {
         for weight in self.previous_weights.iter_mut() {
-            *weight += offset;
+            *weight += offset * *weight;
         }
     }
 }
